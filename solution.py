@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 
+
 def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataFrame:
     """
     Function for creating new DataFrame with old data and new columns
@@ -82,14 +83,14 @@ def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataF
     # ~~~~~~ processing operations
 
     df_new = df.copy(deep=True)
-    
+
     # ok never mind. I dont want to lose points bcs of it. But rip performance
     for col in role_data["cols"]:
         if not pd.api.types.is_numeric_dtype(df_new[col]):
             try:
                 df_new[col] = pd.to_numeric(df_new[col])
             except Exception as e:
-                print('Data is not numeric and cant be converted')
+                print("Data is not numeric and cant be converted")
                 return pd.DataFrame([])
 
     for idx, operator in enumerate(role_data["operations"]):
@@ -103,11 +104,12 @@ def add_virtual_column(df: pd.DataFrame, role: str, new_column: str) -> pd.DataF
             df_new = _multiplication(df_new, col1, col2, new_column, idx)
     return df_new.copy(deep=True)
 
+
 if __name__ == "__main__":
     # simple test
     df_exmpl = pd.DataFrame(
         {
-            "xyz": ['1.4', '2', '3'],
+            "xyz": ["1.4", "2", "3"],
             "x_z": [1, 2, 3],
             # "x5z": [1, 2, 3],
             # "x.z": [1, 2, 3],
